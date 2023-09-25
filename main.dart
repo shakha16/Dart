@@ -1,28 +1,72 @@
 import 'dart:io';
 
-// void main(List<String> args) {
-//   final arr = [1, 2, 3, 4, 5, 6];
-//   print(a(arr));
+// Stream<int>? number(int num) {
+//   for (var i = 0; i <= num; i++) {
+//     print("Число $i");
+//   }
 // }
 
-// a(arr) {
-//   List<int> evenNumbers = [];
-
-//   arr.forEach((number) {
-//     if (number % 2 == 0) {
-//       evenNumbers.add(number);
-//     }
-//   });
-//   return evenNumbers;
+// a() {
+//   print("Введите число");
+//   int num = int.parse(stdin.readLineSync() ?? "0");
+//   number(num);
 // }
 
-void main(List<String> args) {
-  print("Enter age");
-  int year = int.parse(stdin.readLineSync() ?? "0");
-  print(a(year));
+void main() {
+  Employee employee = Employee(
+    passport: '123456',
+    name: 'John',
+    surname: 'Doe',
+    phoneNumber: '123-456-7890',
+  );
+
+  EmployeeModel employeeModel = EmployeeModel.fromEmployee(employee);
+
+  Map<String, dynamic> employeeJson = employeeModel.toJson();
+
+  print(employeeJson);
 }
 
-a(year) {
-  final thisYear = 2023;
-  return (thisYear - year);
+class Employee {
+  String passport;
+  String name;
+  String surname;
+  String phoneNumber;
+
+  Employee(
+      {required this.passport,
+      required this.name,
+      required this.surname,
+      required this.phoneNumber});
+}
+
+class EmployeeModel extends Employee {
+  EmployeeModel(
+      {required passport,
+      required name,
+      required surname,
+      required phoneNumber})
+      : super(
+            passport: passport,
+            name: name,
+            surname: surname,
+            phoneNumber: phoneNumber);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'passport': passport,
+      'name': name,
+      'surname': surname,
+      'phoneNumber': phoneNumber,
+    };
+  }
+
+  factory EmployeeModel.fromEmployee(Employee employee) {
+    return EmployeeModel(
+      passport: employee.passport,
+      name: employee.name,
+      surname: employee.surname,
+      phoneNumber: employee.phoneNumber,
+    );
+  }
 }
